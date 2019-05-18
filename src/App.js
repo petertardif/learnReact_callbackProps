@@ -31,6 +31,10 @@ class App extends React.Component {
     })
   }
 
+  handleAddItem = (itemName) => {
+    console.log('handle add item', { itemName })
+  }
+
   render() {
     return (
       <>
@@ -39,7 +43,9 @@ class App extends React.Component {
         </header>
         <main>
           <section>
-            <AddItemForm />
+            <AddItemForm 
+              onAddItem={this.handleAddItem}
+            />
           </section>
           <section>
             <ShoppingList 
