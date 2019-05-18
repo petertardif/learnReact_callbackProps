@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AddItemForm from './composition/AddItemForm';
+import ShoppingList from './composition/ShoppingList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    shoppingItems: [
+      /* put stub items in here for testing */
+      { name: 'apples', checked: false },
+      { name: 'oranges', checked: true },
+      { name: 'bread', checked: false },
+    ]
+  };
+
+  handleDeleteItem = (item) => {
+    const newItems = this.state.shoppingItems.filter(itm => itm !== item)
+    this.setState({
+      shoppingItems: newItems
+    })
+  }
+
+  handleCheckedItem = (item) => {
+    const newItems = this.state.shoppingItems.map(itm => {
+      if(itm === item) {
+        itm.checked = !itm.checked;
+      }
+      return itm
+    })
+    this.setState({
+      shoppingItems: newItems
+    })
+  }
+
+  render() {
+    return (
+      <>
+        <header>
+          <h1>Shopping List</h1>
+        </header>
+        <main>
+          <section>
+            <AddItemForm />
+          </section>
+          <section>
+            <ShoppingList 
+              items={this.state.shoppingItems} 
+              onDeleteItem={this.handleDeleteItem}
+              onCheckItem={this.handleCheckedItem}
+            />
+          </section>
+        </main>
+      </>
+    )
+  }
 }
 
 export default App;
